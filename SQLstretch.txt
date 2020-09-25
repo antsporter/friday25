@@ -1,0 +1,19 @@
+## Stretch Goals
+
+    4. The most popular subcategory for a specific date.
+    - select SubCategoryName, count(*) as Pop, DateofSale from Product join Sales on Product.ProductID = Sales.ProductID
+    join SubCategory on Subcategory.SubcategoryID = Product.SubCategoryID where DateofSale = 20200924 group by
+    DateofSale, SubCategoryName having count(*) = (select max(p) from (select count(*) as p, Subcategory.SubcategoryID 
+    from Product join Sales on Product.ProductID = Sales.ProductID join Subcategory on Subcategory.SubCategoryID = Product.SubCategoryID
+    group by DateofSale, Subcategory.SubCategoryID) as newTable);
+    
+    5. The most popular subcategory for last week.
+    - select SubCategoryName, count(*) as Pop, week(DateofSale) from Product join Sales on Product.ProductID = Sales.ProductID
+    join SubCategory on Subcategory.SubcategoryID = Product.SubCategoryID where week(DateofSale) = (week(curdate())-1) 
+    and year(DateofSale) = year(curdate()) group by week(DateofSale), SubCategoryName having count(*) = (select max(p) 
+    from (select count(*) as p, Subcategory.SubcategoryID from Product join Sales on Product.ProductID = Sales.ProductID 
+    join Subcategory on Subcategory.SubCategoryID = Product.SubCategoryID where week(DateofSale) = (week(curdate())-1) and
+    year(DateofSale) = year(curdate()) group by week(DateofSale), Subcategory.SubCategoryID) as newTable);
+    
+    6. The most popular subcategory for a specific month.
+    - 
