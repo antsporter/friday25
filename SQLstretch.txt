@@ -16,4 +16,9 @@
     year(DateofSale) = year(curdate()) group by week(DateofSale), Subcategory.SubCategoryID) as newTable);
     
     6. The most popular subcategory for a specific month.
-    - 
+    - select SubCategoryName, count(*) as Pop, month(DateofSale) from Product join Sales on Product.ProductID = Sales.ProductID
+    join SubCategory on Subcategory.SubcategoryID = Product.SubCategoryID where month(DateofSale) = "09" 
+    and year(DateofSale) = year(curdate()) group by
+    month(DateofSale), SubCategoryName having count(*) = (select max(p) from (select count(*) as p, Subcategory.SubcategoryID 
+    from Product join Sales on Product.ProductID = Sales.ProductID join Subcategory on   Subcategory.SubCategoryID=Product.SubCategoryID where month(DateofSale) = "09" and year(DateofSale) = year(curdate())
+    group by month(DateofSale), Subcategory.SubCategoryID) as newTable);
